@@ -3,15 +3,15 @@
 #include "VkInitializers.hpp"
 #include <memory>
 #include <cassert>
-// Compare the required layers to the avaliable layers on the system
+// Compare the required layers to the available layers on the system
 bool VkHelper::CheckLayersSupport(const char** layers, int count)
 {
-	// Find out how many layers are avaliable on the system
+	// Find out how many layers are available on the system
 	uint32_t layerCount;
 	vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
 	// Using the count, tell the system how many layer definitions we want to read
-	// These layer properties are the layers that are avaliable on the system
+	// These layer properties are the layers that are available on the system
 	std::unique_ptr<VkLayerProperties[]> layerProperties(new VkLayerProperties[layerCount]());
 	vkEnumerateInstanceLayerProperties(&layerCount, layerProperties.get());
 
@@ -19,8 +19,8 @@ bool VkHelper::CheckLayersSupport(const char** layers, int count)
 	for (int i = 0; i < count; ++i)
 	{
 		bool layerFound = false;
-		// Loop through for each avaliable system layer and atempt to find our required layer
-		for (int j = 0; j < layerCount; ++j)
+		// Loop through for each available system layer and attempt to find our required layer
+		for (uint32_t j = 0; j < layerCount; ++j)
 		{
 			// Check to see if the layer matches
 			if (strcmp(layers[i], layerProperties[j].layerName) == 0)
@@ -66,14 +66,27 @@ VkInstance VkHelper::CreateInstance(const char** extensions, unsigned int extens
 		&instance                                                // The Vulkan instance to be initialized
 	);
 
-	// Was the vulkan instance created sucsessfully
+	// Was the vulkan instance created successfully
 	assert(result == VK_SUCCESS);
 
 	return instance;
 }
-
+// A basic debug callback. A more advanced one could be created, but this will do for basic debugging
+VKAPI_ATTR VkBool32 VKAPI_CALL MyDebugReportCallback(
+        VkDebugReportFlagsEXT       flags,
+        VkDebugReportObjectTypeEXT  objectType,
+        uint64_t                    object,
+        size_t                      location,
+        int32_t                     messageCode,
+        const char*                 pLayerPrefix,
+        const char*                 pMessage,
+        void*                       pUserData)
+{
+    printf("%s\n",pMessage);
+    return VK_FALSE;
+}
 // Attach a debugger to the application to give us validation feedback.
-// This is usefull as it tells us about any issues without application
+// This is useful as it tells us about any issues without application
 VkDebugReportCallbackEXT VkHelper::CreateDebugger(const VkInstance& instance)
 {
     // Get the function pointer for the debug callback function within VK
@@ -107,7 +120,7 @@ VkDebugReportCallbackEXT VkHelper::CreateDebugger(const VkInstance& instance)
     // Create the new callback
     VkResult result = vkCreateDebugReportCallbackEXT(instance, &callbackCreateInfo, nullptr, &callback);
 
-    // Was the vulkan callback created sucsessfully
+    // Was the vulkan callback created successfully
     assert(result == VK_SUCCESS);
 
     return callback;

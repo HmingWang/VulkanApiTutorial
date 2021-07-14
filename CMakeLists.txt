@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
+
+PROJECT(VulkanApiTutorial CXX)
+
 set(project_name VulkanApiTutorial)
 set(HAVE_LIBC TRUE)
 set(src main.cpp)
