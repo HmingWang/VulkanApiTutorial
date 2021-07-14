@@ -73,13 +73,38 @@ int main() {
     vkEnumeratePhysicalDevices(instance,&device_count, devices);
     const uint32_t extension_count=1;
     const char* device_extensions[extension_count]={VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+
+    VkPhysicalDevice chosen_device=VK_NULL_HANDLE;
+    uint32_t chosen_queue_family_index=0;
+    VkPhysicalDeviceProperties chosen_physicalDeviceProperties;
+    VkPhysicalDeviceFeatures chosen_physicalDeviceFeatures;
+    VkPhysicalDeviceMemoryProperties chosen_physicalDeviceMemoryProperties;
     for(uint32_t i=0;i< device_count;++i){
         if(HasRequiredExtensions(devices[i],device_extensions,extension_count)){
+            uint32_t queue_family_index=0;
+            if(GetQueueFamily(devices[i],VkQueueFlagBits::VK_QUEUE_GRAPHICS_BIT,queue_family_index)){
+                VkPhysicalDeviceProperties physicalDeviceProperties;
+                vkGetPhysicalDeviceProperties(devices[i],&physicalDeviceProperties);
 
+                VkPhysicalDeviceFeatures physicalDeviceFeatures;
+                vkGetPhysicalDeviceFeatures(devices[i],&physicalDeviceFeatures);
+
+                VkPhysicalDeviceMemoryProperties physicalDeviceMemoryProperties;
+                vkGetPhysicalDeviceMemoryProperties(devices[i],&physicalDeviceMemoryProperties);
+
+                if(chosen_device==VK_NULL_HANDLE){
+                    chosen_device=devices[i];
+                    chosen_physicalDeviceFeatures=physicalDeviceFeatures;
+                    chosen_physicalDeviceProperties=physicalDeviceProperties;
+                    chosen_physicalDeviceMemoryProperties=physicalDeviceMemoryProperties;
+                    chosen_queue_family_index=queue_family_index;
+                }
+
+            }
         }
     }
 
-
+    assert(chosen_device!=VK_NULL_HANDLE);
     Desdroy();
     return 0;
 }
