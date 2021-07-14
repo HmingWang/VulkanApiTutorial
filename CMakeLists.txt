@@ -3,10 +3,12 @@ set(project_name VulkanApiTutorial)
 set(HAVE_LIBC TRUE)
 set(src main.cpp)
 set(headers)
+set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory("Vk-Helper")
-
+include_directories(${PROJECT_SOURCE_DIR}/Vk-Helper/include)
 add_executable(${project_name} ${src} ${headers})
+target_link_libraries(${project_name} Vk-Helper)
 find_package(Vulkan)
 if(Vulkan_FOUND)
     target_include_directories(${project_name} PRIVATE Vulkan::Vulkan)

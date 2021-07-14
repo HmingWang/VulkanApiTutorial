@@ -1,41 +1,85 @@
 #include<vulkan/vulkan.h>
+#include<VkCore.hpp>
 #include <cassert>
-VkInstance instance = VK_NULL_HANDLE;
+#include<string>
 
-void setup() 
-{
+VkInstance instance = static_cast<VkInstance>(VK_NULL_HANDLE);
+VkDebugReportCallbackEXT debuger;
+
+void Setup() {
     const uint32_t extension_count = 1;
-    const char* instance_extentions[extension_count] = { "VK_EXT_debug_report" };
+    const char *instance_extentions[extension_count] = {"VK_EXT_debug_report"};
     const uint32_t layer_count = 1;
-    const char* instance_layers[layer_count] = { "VK_LAYER_KHRONOS_validation" };
+    const char *instance_layers[layer_count] = {"VK_LAYER_KHRONOS_validation"};
 
-    assert(VkHelper::CheckLayerSupport(instance_layers, 1) && "Unsupported Layers Found");
+    assert(VkHelper::CheckLayersSupport(instance_layers, 1) && "Unsupported Layers Found");
+
+    instance = VkHelper::CreateInstance(instance_extentions, extension_count, instance_layers, layer_count,
+                                        "VulkanApiTutorial",
+                                        VK_MAKE_VERSION(1, 0, 0), "vulkan engin", VK_MAKE_VERSION(1, 0, 0),
+                                        VK_MAKE_VERSION(1, 1, 108));
+    debuger = VkHelper::CreateDebugger(instance);
 }
-int main()
-{
-    setup();
-    const char *instance_layers[]={"VK_LAYER_KHRONOS_validation"};
-    const char* instance_extentions[] = { "VK_EXT_debug_report" };
 
-    VkApplicationInfo app_info = {};
-    app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    app_info.pApplicationName = "Instance";
-    app_info.pEngineName = "my engin";
-    app_info.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-    app_info.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    app_info.apiVersion = VK_MAKE_VERSION(1, 1, 108);
+void Desdroy(){
+    VkHelper::DestroyDebugger(instance,debuger);
+    vkDestroyInstance(instance,NULL);
+}
 
-    VkInstanceCreateInfo create_info = {};
-    create_info.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    create_info.pApplicationInfo = &app_info;
-    create_info.enabledExtensionCount = 1;
-    create_info.ppEnabledExtensionNames = instance_extentions;
-    create_info.enabledLayerCount = 1;
-    create_info.ppEnabledLayerNames = instance_layers;
+bool HasRequiredExtensions(const VkPhysicalDevice& device,const char** extensions, uint32_t extension_count){
+    uint32_t device_extension_count=0;
+    vkEnumerateDeviceExtensionProperties(device, nullptr,&device_extension_count, nullptr);
+    VkExtensionProperties* extensionProperties=new VkExtensionProperties[device_extension_count];
+    vkEnumerateDeviceExtensionProperties(device, nullptr,&device_extension_count, extensionProperties);
 
-    VkResult result = vkCreateInstance(&create_info, NULL, &instance);
-    assert(result == VK_SUCCESS);
+    bool extension_found=false;
+    for(uint32_t i=0;i<extension_count;++i){
+        extension_found=false;
+        for(uint32_t j=0;j<device_extension_count;++j){
+            if(strcmp(extensions[i],extensionProperties[j].extensionName)==0){
+                extension_found=true;
+                break;
+            }
+        }
+        if(!extension_found)
+            return false;
+    }
 
-    vkDestroyInstance(instance, NULL);
+    return true;
+}
+bool GetQueueFamily(const VkPhysicalDevice& device,VkQueueFlags flags,uint32_t& queue_family_index){
+    uint32_t  queue_family_count=0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device,&queue_family_count, nullptr);
+    VkQueueFamilyProperties* queueFamilyProperties=new VkQueueFamilyProperties [queue_family_count];
+    vkGetPhysicalDeviceQueueFamilyProperties(device,&queue_family_count, queueFamilyProperties);
+    for(uint32_t i=0;i<queue_family_count;++i){
+        if(queueFamilyProperties[i].queueCount>0){
+            if((queueFamilyProperties[i].queueFlags&flags)==flags){
+                queue_family_index=i;
+                delete[] queueFamilyProperties;
+                return true;
+            }
+        }
+    }
+
+    delete[] queueFamilyProperties;
+    return false;
+}
+int main() {
+    Setup();
+    uint32_t device_count=0;
+    vkEnumeratePhysicalDevices(instance,&device_count, nullptr);
+    auto *devices=new VkPhysicalDevice[device_count];
+    vkEnumeratePhysicalDevices(instance,&device_count, devices);
+    const uint32_t extension_count=1;
+    const char* device_extensions[extension_count]={VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+    for(uint32_t i=0;i< device_count;++i){
+        if(HasRequiredExtensions(devices[i],device_extensions,extension_count)){
+
+        }
+    }
+
+
+    Desdroy();
     return 0;
 }

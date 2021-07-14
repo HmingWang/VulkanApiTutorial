@@ -110,7 +110,7 @@ Vk-Helper/clean: Vk-Helper/CMakeFiles/Vk-Helper.dir/clean
 # Target rules for target CMakeFiles/VulkanApiTutorial.dir
 
 # All Build rule for target.
-CMakeFiles/VulkanApiTutorial.dir/all:
+CMakeFiles/VulkanApiTutorial.dir/all: Vk-Helper/CMakeFiles/Vk-Helper.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/VulkanApiTutorial.dir/build.make CMakeFiles/VulkanApiTutorial.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/VulkanApiTutorial.dir/build.make CMakeFiles/VulkanApiTutorial.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles --progress-num=4,5 "Built target VulkanApiTutorial"
@@ -118,7 +118,7 @@ CMakeFiles/VulkanApiTutorial.dir/all:
 
 # Build rule for subdir invocation for target.
 CMakeFiles/VulkanApiTutorial.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/VulkanApiTutorial.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/VulkanApiTutorial.dir/rule

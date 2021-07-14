@@ -98,6 +98,8 @@ VulkanApiTutorial_EXTERNAL_OBJECTS =
 
 VulkanApiTutorial: CMakeFiles/VulkanApiTutorial.dir/main.cpp.o
 VulkanApiTutorial: CMakeFiles/VulkanApiTutorial.dir/build.make
+VulkanApiTutorial: Vk-Helper/libVk-Helper.a
+VulkanApiTutorial: /usr/local/lib/libvulkan.dylib
 VulkanApiTutorial: /usr/local/lib/libvulkan.dylib
 VulkanApiTutorial: CMakeFiles/VulkanApiTutorial.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable VulkanApiTutorial"

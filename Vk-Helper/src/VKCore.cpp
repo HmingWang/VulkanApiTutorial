@@ -1,5 +1,6 @@
 
 #include <VkCore.hpp>
+#include "VkInitializers.hpp"
 #include <memory>
 #include <cassert>
 // Compare the required layers to the avaliable layers on the system
@@ -69,4 +70,59 @@ VkInstance VkHelper::CreateInstance(const char** extensions, unsigned int extens
 	assert(result == VK_SUCCESS);
 
 	return instance;
+}
+
+// Attach a debugger to the application to give us validation feedback.
+// This is usefull as it tells us about any issues without application
+VkDebugReportCallbackEXT VkHelper::CreateDebugger(const VkInstance& instance)
+{
+    // Get the function pointer for the debug callback function within VK
+    PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT =
+            reinterpret_cast<PFN_vkCreateDebugReportCallbackEXT>
+            (vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT"));
+
+
+    /*PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT =
+        reinterpret_cast<PFN_vkDebugReportMessageEXT>
+        (vkGetInstanceProcAddr(instance, "vkDebugReportMessageEXT"));
+    PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT =
+        reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>
+        (vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));*/
+
+
+    // Define a CreateInfo for our new callback
+    VkDebugReportCallbackCreateInfoEXT callbackCreateInfo;
+    callbackCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;            // Callback Type
+    callbackCreateInfo.pNext = nullptr;
+    callbackCreateInfo.flags = VK_DEBUG_REPORT_ERROR_BIT_EXT |                            // What we wukk be notified about
+                               VK_DEBUG_REPORT_WARNING_BIT_EXT |                                                 //...
+                               VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;                                      //...
+    callbackCreateInfo.pfnCallback = &MyDebugReportCallback;                              // Our function that will be called on a callback
+    callbackCreateInfo.pUserData = nullptr;                                               // A custom data pointer that the user can define. Since we are calling a non member function
+    // it may be usefull to pass a pointer instance of the engine or rendering libary, in this case
+    // we dont need anything
+
+    VkDebugReportCallbackEXT callback;
+
+    // Create the new callback
+    VkResult result = vkCreateDebugReportCallbackEXT(instance, &callbackCreateInfo, nullptr, &callback);
+
+    // Was the vulkan callback created sucsessfully
+    assert(result == VK_SUCCESS);
+
+    return callback;
+}
+
+void VkHelper::DestroyDebugger(const VkInstance & instance, const VkDebugReportCallbackEXT & debugger)
+{
+    auto vkDestroyDebugReportCallbackEXT =
+            reinterpret_cast<PFN_vkDestroyDebugReportCallbackEXT>
+            (vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT"));
+
+    // Destroy the debug callback
+    vkDestroyDebugReportCallbackEXT(
+            instance,
+            debugger,
+            nullptr
+    );
 }

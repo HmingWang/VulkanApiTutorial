@@ -10,12 +10,14 @@ set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../Vk-Helper/include"
   "../Vulkan::Vulkan"
   "/usr/local/include"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/Vk-Helper/CMakeFiles/Vk-Helper.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.
