@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libVk-Helper.a CMakeFiles/Vk-Helper.dir/src/VkInitializers.cpp.o CMakeFiles/Vk-Helper.dir/src/VkCore.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libVk-Helper.a

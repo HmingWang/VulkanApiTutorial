@@ -1,0 +1,6 @@
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/CMakeFiles/VulkanApiTutorial.dir
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/Vk-Helper/CMakeFiles/rebuild_cache.dir
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/Vk-Helper/CMakeFiles/edit_cache.dir
+/Users/whaim/Desktop/VulkanApiTutorial/cmake-build-debug/Vk-Helper/CMakeFiles/Vk-Helper.dir
