@@ -26,6 +26,7 @@ void Desdroy(){
     vkDestroyInstance(instance,NULL);
 }
 
+
 bool HasRequiredExtensions(const VkPhysicalDevice& device,const char** extensions, uint32_t extension_count){
     uint32_t device_extension_count=0;
     vkEnumerateDeviceExtensionProperties(device, nullptr,&device_extension_count, nullptr);
