@@ -68,17 +68,9 @@ bool GetQueueFamily(const VkPhysicalDevice& device,VkQueueFlags flags,uint32_t& 
 }
 int main() {
     Setup();
-    uint32_t device_count=0;
-    vkEnumeratePhysicalDevices(instance,&device_count, nullptr);
-    auto *devices=new VkPhysicalDevice[device_count];
-    vkEnumeratePhysicalDevices(instance,&device_count, devices);
-    const uint32_t extension_count=1;
-    const char* device_extensions[extension_count]={VK_KHR_SWAPCHAIN_EXTENSION_NAME};
-    for(uint32_t i=0;i< device_count;++i){
-        if(HasRequiredExtensions(devices[i],device_extensions,extension_count)){
 
-        }
-    }
+    VkDevice device=VK_NULL_HANDLE;
+    VkDeviceQueueCreateInfo deviceQueueCreateInfo={};
 
 
     Desdroy();
