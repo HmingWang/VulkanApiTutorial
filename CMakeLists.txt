@@ -1,23 +1,31 @@
 cmake_minimum_required(VERSION 3.1)
 
-PROJECT(VulkanApiTutorial CXX)
+project(VulkanApiTutorial CXX)
 
+message(${CMAKE_CURRENT_SOURCE_DIR})
 set(project_name VulkanApiTutorial)
 set(HAVE_LIBC TRUE)
-set(src main.cpp)
-set(headers)
-set(CMAKE_CXX_STANDARD 17)
 
-add_executable(${project_name} ${src} ${headers})
+set(CMAKE_CXX_STANDARD 17)
+#set_property(TARGET ${project_name} PROPERTY CMAKE_CXX_STANDARD 17)
+
+file(GLOB CPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB HPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+#message(${CPP_FILES})
+#set(SRC main.cpp VulkanApplication.cpp VulkanInstance.cpp VulkanLayerAndExtension.cpp VulkanApplication.h VulkanInstance.h VulkanLayerAndExtension.h)
+add_executable(${project_name} ${CPP_FILES} VulkanDevice.cpp VulkanDevice.h)
 
 find_package(Vulkan)
 if(Vulkan_FOUND)
+    message("vulkan found")
     target_include_directories(${project_name} PRIVATE Vulkan::Vulkan)
     target_link_libraries(${project_name} Vulkan::Vulkan)
 endif()
 
 find_package(glfw3)
 if(glfw3_FOUND)
+    message("glfw found")
     target_include_directories(${project_name} PRIVATE glfw)
     target_link_libraries(${project_name} glfw)
 endif()
+
