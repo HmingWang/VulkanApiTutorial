@@ -9,21 +9,25 @@
 
 class VulkanDevice {
     VkDevice device;
-    VkPhysicalDevice physicalDevice;
-    VkPhysicalDeviceProperties deviceProperties;
-    VkPhysicalDeviceMemoryProperties deviceMemoryProperties;
+    VkPhysicalDevice* pPhysicalDevice;
+    std::vector<VkPhysicalDevice> physicalDeviceList;
     VkQueue queue;
     std::vector<VkQueueFamilyProperties> queueFamilyProperties;
     uint32_t graphicsQueueFamilyIndex;
     uint32_t queueFamilyCount;
-    VulkanLayerAndExtension layerAndExtension;
 public:
-    void createDevice();
+    VulkanLayerAndExtension layerExtension;
+    VkPhysicalDeviceProperties deviceProperties;
+    VkPhysicalDeviceMemoryProperties deviceMemoryProperties;
+
+    explicit VulkanDevice(VkPhysicalDevice * physicalDevice);
+    void createDevice(std::vector<const char*>& layers,std::vector<const char*>& extensions);
     void destroyDevice();
     void initializeDeviceQueue();
     void memoryTypeFromProperties();
     void getGraphicsQueueHandle();
     void getPhysicalDeviceQueuesAndProperties();
+    void getDeviceQueue();
 };
 
 

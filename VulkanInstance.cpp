@@ -7,6 +7,9 @@
 VkResult VulkanInstance::createInstance(std::vector<const char *> &layers, std::vector<const char *> &extensions,
                                         const char *applicationName) {
 
+    layerExtension.instanceExtensionNames=extensions;
+    layerExtension.instanceLayerNames=layers;
+
     VkApplicationInfo applicationInfo={};
     applicationInfo.sType=VK_STRUCTURE_TYPE_APPLICATION_INFO;
     applicationInfo.pNext= nullptr;

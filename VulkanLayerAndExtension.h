@@ -18,14 +18,16 @@ private:
     std::vector<const char*> appRequestedLayerName;
     std::vector<const char*> appRequestedExtensionName;
 public:
+    std::vector<const char *> instanceExtensionNames;
+    std::vector<const char *> instanceLayerNames;
     //层和对应扩展列表
     VkResult getInstanceLayerProperties();
-
+    //基于设备的扩展
+    VkResult getDeviceExtensionProperties(VkPhysicalDevice *physicalDevice);
     void print();
 
 private:
     //全局扩展
-    VkResult getExtensionProperties(LayerProperties &layerProperties,VkPhysicalDevice *physicalDevice=NULL);
-    //基于设备的扩展
-    VkResult getDeviceExtensionProperties(VkPhysicalDevice *physicalDevice);
+    VkResult getExtensionProperties(LayerProperties &layerProperties,VkPhysicalDevice *physicalDevice=nullptr);
+
 };

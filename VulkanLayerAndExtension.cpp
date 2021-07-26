@@ -14,8 +14,10 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties() {
     std::vector<VkLayerProperties> layerProperties(instanceLayerCount);
     vkEnumerateInstanceLayerProperties(&instanceLayerCount,layerProperties.data());
 
+    std::cout<<"\nInstance Layers"<<std::endl;
+    std::cout<<"================"<<std::endl;
     for(auto globalLayerProp:layerProperties){
-
+        std::cout<<"\n"<<globalLayerProp.description<<"\n\t|\n\t|---[Layer Name]-->"<<globalLayerProp.layerName<<'\n';
         LayerProperties layerProps;
         layerProps.properties=globalLayerProp;
 
@@ -23,6 +25,9 @@ VkResult VulkanLayerAndExtension::getInstanceLayerProperties() {
         assert(result==VK_SUCCESS);
 
         this->layerPropertiesList.push_back(layerProps);
+        for(auto j:layerProps.extensions){
+            std::cout<<"\t\t|\n\t\t|---[Layer Extension]-->"<<j.extensionName<<'\n';
+        }
     }
     return VK_SUCCESS;
 }
@@ -59,13 +64,18 @@ VulkanLayerAndExtension::getExtensionProperties(LayerProperties &layerProperties
 
 VkResult VulkanLayerAndExtension::getDeviceExtensionProperties(VkPhysicalDevice *physicalDevice) {
     VkResult result;
-    std::vector<LayerProperties>* instanceLayerProp=&VulkanApplication::GetAppInstance()->instanceObj.layerExtension.layerPropertiesList;
-    for(auto globalLayerProp:*instanceLayerProp){
+    std::vector<LayerProperties>* instanceLayerProp=&theApp->instanceObj.layerExtension.layerPropertiesList;
+    std::cout<<"\nDevice extensions"<<std::endl;
+    std::cout<<"=================="<<std::endl;
+    for(const auto& globalLayerProp:*instanceLayerProp){
         LayerProperties layerProperties;
         layerProperties.properties=globalLayerProp.properties;
         result= getExtensionProperties(layerProperties,physicalDevice);
         assert(result==VK_SUCCESS);
         layerPropertiesList.push_back(layerProperties);
+        for(auto j:layerProperties.extensions){
+            std::cout<<"\t\t|\n\t\t|---[Layer Extension]-->"<<j.extensionName<<'\n';
+        }
     }
 
     return VK_SUCCESS;

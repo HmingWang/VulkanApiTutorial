@@ -7,6 +7,7 @@
 #include "vector"
 #include "string"
 #include "VulkanInstance.h"
+#include "VulkanDevice.h"
 
 class VulkanApplication {
 private:
@@ -14,12 +15,13 @@ private:
     static VulkanApplication *appInstance;
 public:
     VulkanInstance instanceObj;
-
+    VulkanDevice *deviceObj{};
     static VulkanApplication* GetAppInstance();
     ~VulkanApplication();
     VkResult createVulkanInstance(std::vector<const char *>& layers,std::vector<const char *>& extensions,const char* applicationName);
     void initialize(std::vector<const char *> &layers, std::vector<const char *> &extensions,const char * appName);
-    VkResult enumeratePhysicalDevices(std::vector<VkPhysicalDevice>& physicalDevices);
+    VkResult enumeratePhysicalDevices(std::vector<VkPhysicalDevice>& physicalDevices) const;
+    VkResult handShakeWithDevice(VkPhysicalDevice* gpu,std::vector<const char*>& layer,std::vector<const char *>& extensions);
 };
 
-
+#define theApp (VulkanApplication::GetAppInstance())
