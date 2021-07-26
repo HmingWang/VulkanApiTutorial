@@ -10,6 +10,8 @@ VkResult VulkanInstance::createInstance(std::vector<const char *> &layers, std::
 
     layerExtension.instanceExtensionNames=extensions;
     layerExtension.instanceLayerNames=layers;
+    layerExtension.areLayersSupported(layers);
+    layerExtension.initDebugReportCallbackCreateInfo();
 
     VkApplicationInfo applicationInfo={};
     applicationInfo.sType=VK_STRUCTURE_TYPE_APPLICATION_INFO;
@@ -22,7 +24,7 @@ VkResult VulkanInstance::createInstance(std::vector<const char *> &layers, std::
 
     VkInstanceCreateInfo instanceCreateInfo={};
     instanceCreateInfo.sType=VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    instanceCreateInfo.pNext= nullptr;
+    instanceCreateInfo.pNext= &layerExtension.debugReportCallbackCreateInfoExt;
     instanceCreateInfo.flags=0;
     instanceCreateInfo.enabledLayerCount=layers.size();
     instanceCreateInfo.ppEnabledLayerNames=layers.data();

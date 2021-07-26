@@ -13,7 +13,7 @@ file(GLOB CPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 file(GLOB HPP_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 #message(${CPP_FILES})
 #set(SRC main.cpp VulkanApplication.cpp VulkanInstance.cpp VulkanLayerAndExtension.cpp VulkanApplication.h VulkanInstance.h VulkanLayerAndExtension.h)
-add_executable(${project_name} ${CPP_FILES} VulkanDevice.cpp VulkanDevice.h VulkanHeader.h)
+add_executable(${project_name} ${CPP_FILES} VulkanDevice.cpp VulkanDevice.h VulkanHeader.h CommandBufferMgr.cpp CommandBufferMgr.h)
 
 find_package(Vulkan)
 if(Vulkan_FOUND)

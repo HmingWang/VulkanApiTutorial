@@ -6,18 +6,20 @@
 using namespace std;
 
 std::vector<const char *> layers={
-        "VK_LAYER_LUNARG_api_dump",
-        "VK_LAYER_KHRONOS_validation"
+    "VK_LAYER_KHRONOS_validation"
 };
 std::vector<const char *> extensions={
     VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
     VK_EXT_DEBUG_REPORT_EXTENSION_NAME
 };
+std::vector<const char*> deviceExtensionNames={
+"VK_KHR_portability_subset"
+};
 
 int main(){
 //    VulkanLayerAndExtension layerAndExtension={};
 //    layerAndExtension.getInstanceLayerProperties();
-//    layerAndExtension.print();
-    VulkanApplication *app=VulkanApplication::GetAppInstance();
-    app->initialize(layers, extensions,"app");
+
+//    layerAndExtension.print();hh
+    theApp->initialize(layers, extensions,deviceExtensionNames,"app");
 }
