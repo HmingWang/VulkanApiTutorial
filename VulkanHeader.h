@@ -6,6 +6,8 @@
 #include "iostream"
 #include "vector"
 #include "string"
+#include "exception"
+#include "cassert"
 
 #include "vulkan/vulkan.h"
 

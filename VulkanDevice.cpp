@@ -3,6 +3,7 @@
 //
 
 #include "VulkanDevice.h"
+#include "VulkanHeader.h"
 
 
 void VulkanDevice::createDevice(std::vector<const char *> &layers, std::vector<const char *> &extensions) {

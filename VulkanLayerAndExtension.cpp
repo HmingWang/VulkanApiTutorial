@@ -5,6 +5,7 @@
 #include <iostream>
 #include "VulkanLayerAndExtension.h"
 #include "VulkanApplication.h"
+#include "VulkanHeader.h"
 
 VkResult VulkanLayerAndExtension::getInstanceLayerProperties() {
     uint32_t instanceLayerCount;

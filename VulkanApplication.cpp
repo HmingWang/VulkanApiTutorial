@@ -3,6 +3,7 @@
 //
 
 #include "VulkanApplication.h"
+#include "VulkanHeader.h"
 
 VulkanApplication::VulkanApplication() {
     instanceObj.layerExtension.getInstanceLayerProperties();

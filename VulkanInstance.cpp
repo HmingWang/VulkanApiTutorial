@@ -3,6 +3,7 @@
 //
 
 #include "VulkanInstance.h"
+#include "VulkanHeader.h"
 
 VkResult VulkanInstance::createInstance(std::vector<const char *> &layers, std::vector<const char *> &extensions,
                                         const char *applicationName) {
