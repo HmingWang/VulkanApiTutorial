@@ -10,9 +10,12 @@
 #include "cassert"
 
 #include "vulkan/vulkan.h"
+#define GLFW_INCLUDE_VULKAN
+#include "GLFW/glfw3.h"
 
 #include "VulkanApplication.h"
 #include "VulkanLayerAndExtension.h"
 #include "VulkanInstance.h"
 #include "VulkanDevice.h"
-
+#include "VulkanRenderer.h"
+#include "VulkanSwapChain.h"

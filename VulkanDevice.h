@@ -8,7 +8,6 @@
 #include "VulkanLayerAndExtension.h"
 
 class VulkanDevice {
-    VkDevice device;
     VkPhysicalDevice* pPhysicalDevice;
     std::vector<VkPhysicalDevice> physicalDeviceList;
     VkQueue queue;
@@ -16,9 +15,12 @@ class VulkanDevice {
     uint32_t graphicsQueueFamilyIndex;
     uint32_t queueFamilyCount;
 public:
+    VkDevice device;
+
     VulkanLayerAndExtension layerExtension;
     VkPhysicalDeviceProperties deviceProperties;
     VkPhysicalDeviceMemoryProperties deviceMemoryProperties;
+    uint32_t graphicsQueueWithPresentIndex;
 
     explicit VulkanDevice(VkPhysicalDevice * physicalDevice);
     void createDevice(std::vector<const char*>& layers,std::vector<const char*>& extensions);
