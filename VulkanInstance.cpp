@@ -1,43 +1,20 @@
 //
-// Created by 王海明 on 2021/7/24.
+// Created by 王海明 on 2022/7/4.
 //
 
 #include "VulkanInstance.h"
-#include "VulkanHeader.h"
 
-VkResult VulkanInstance::createInstance(std::vector<const char *> &layers, std::vector<const char *> &extensions,
-                                        const char *applicationName) {
+VulkanInstance::VulkanInstance(const char* appName) {
+    VkApplicationInfo appInfo{};
+    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+    appInfo.pApplicationName = appName;
+    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.pEngineName = nullptr;
+    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.apiVersion = VK_API_VERSION_1_0;
 
-    layerExtension.instanceExtensionNames=extensions;
-    layerExtension.instanceLayerNames=layers;
-    layerExtension.areLayersSupported(layers);
-    layerExtension.initDebugReportCallbackCreateInfo();
-
-    VkApplicationInfo applicationInfo={};
-    applicationInfo.sType=VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    applicationInfo.pNext= nullptr;
-    applicationInfo.pApplicationName=applicationName;
-    applicationInfo.applicationVersion= VK_MAKE_VERSION(1,0,0);
-    applicationInfo.pEngineName=applicationName;
-    applicationInfo.engineVersion= VK_MAKE_VERSION(1,0,0);
-    applicationInfo.apiVersion=VK_API_VERSION_1_2;
-
-    VkInstanceCreateInfo instanceCreateInfo={};
-    instanceCreateInfo.sType=VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    instanceCreateInfo.pNext= &layerExtension.debugReportCallbackCreateInfoExt;
-    instanceCreateInfo.flags=0;
-    instanceCreateInfo.enabledLayerCount=layers.size();
-    instanceCreateInfo.ppEnabledLayerNames=layers.data();
-    instanceCreateInfo.enabledExtensionCount=extensions.size();
-    instanceCreateInfo.ppEnabledExtensionNames=extensions.data();
-    instanceCreateInfo.pApplicationInfo=&applicationInfo;
-
-    VkResult result= vkCreateInstance(&instanceCreateInfo, nullptr,&instance);
-    assert(result==VK_SUCCESS);
-
-    return result;
 }
 
-void VulkanInstance::destroyInstance() {
-    vkDestroyInstance(instance, nullptr);
+VulkanInstance::~VulkanInstance() {
+
 }

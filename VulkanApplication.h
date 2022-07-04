@@ -1,38 +1,26 @@
 //
-// Created by 王海明 on 2021/7/24.
+// Created by 王海明 on 2022/7/4.
 //
 
 #pragma once
-
-#include "vulkan/vulkan.h"
-#include "vector"
-#include "string"
-#include "VulkanInstance.h"
-#include "VulkanDevice.h"
+#include "Headers.h"
+#include "VulkanWindow.h"
 
 class VulkanApplication {
-private:
-    VulkanApplication();
-
-    static VulkanApplication *appInstance;
 public:
-    VulkanInstance instanceObj;
-    VulkanDevice *deviceObj{};
+    void run();
+    static VulkanApplication& getInstance();
+private:
+    void initWindow();
+    void initVulkan();
+    void mainLoop();
+    void cleanUp();
 
-    static VulkanApplication *GetAppInstance();
+    VulkanWindow* window;
+    const int width=800;
+    const int height=600;
+    const std::string appName="hello world";
 
-    ~VulkanApplication();
-
-    VkResult createVulkanInstance(std::vector<const char *> &layers, std::vector<const char *> &extensions,
-                                  const char *applicationName);
-
-    VkResult enumeratePhysicalDevices(std::vector<VkPhysicalDevice> &physicalDevices) const;
-
-    VkResult
-    handShakeWithDevice(VkPhysicalDevice *gpu, std::vector<const char *> &layer, std::vector<const char *> &extensions);
-
-    void initialize(std::vector<const char *> &layers, std::vector<const char *> &extensions,
-                    std::vector<const char *> deviceExtensions, char *appName);
 };
 
-#define theApp (VulkanApplication::GetAppInstance())
+#define theApp VulkanApplication::getInstance()

@@ -1,26 +1,17 @@
-#include <iostream>
-#include "VulkanLayerAndExtension.h"
+//
+// Created by 王海明 on 2022/7/4.
+//
+#include "Headers.h"
 #include "VulkanApplication.h"
-#include "vector"
-
-using namespace std;
-
-std::vector<const char *> layers = {
-        "VK_LAYER_KHRONOS_validation"
-};
-std::vector<const char *> extensions = {
-        VK_EXT_DEBUG_UTILS_EXTENSION_NAME,
-        VK_EXT_DEBUG_REPORT_EXTENSION_NAME
-};
-std::vector<const char *> deviceExtensionNames = {
-        "VK_KHR_portability_subset"
-        VK_KHR_SWAPCHAIN_EXTENSION_NAME
-};
 
 int main() {
-//    VulkanLayerAndExtension layerAndExtension={};
-//    layerAndExtension.getInstanceLayerProperties();
+    try {
+        std::cout<<"my vulkan application start ..."<<std::endl;
+        theApp.run();
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 
-//    layerAndExtension.print();hh
-    theApp->initialize(layers, extensions, deviceExtensionNames, "app");
+    return EXIT_SUCCESS;
 }
