@@ -11,6 +11,8 @@ public:
     VulkanWindow(int width,int height,const char* windowName);
     ~VulkanWindow();
 
+    static std::vector<const char*> getRequiredExtensions();
+
 private:
     GLFWwindow* window;
 

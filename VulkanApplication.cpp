@@ -4,6 +4,8 @@
 
 #include "VulkanApplication.h"
 
+#include <memory>
+
 void VulkanApplication::run() {
     initWindow();
     initVulkan();
@@ -14,6 +16,7 @@ void VulkanApplication::run() {
 
 void VulkanApplication::initWindow() {
     window=new VulkanWindow(width,height,appName.data());
+    instance=new VulkanInstance(validationLayers,VulkanWindow::getRequiredExtensions(),appName.data());
 
 }
 
@@ -33,7 +36,11 @@ VulkanApplication &VulkanApplication::getInstance() {
     static std::unique_ptr<VulkanApplication> app;
     static std::once_flag onceFlag;
     std::call_once(onceFlag,[](){
-        app.reset(new VulkanApplication());
+        app = std::make_unique<VulkanApplication>();
     });
     return *app;
+}
+
+VkInstance VulkanApplication::getVkInstance() {
+    return instance->getInstance();
 }

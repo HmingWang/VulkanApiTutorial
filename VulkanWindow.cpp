@@ -22,3 +22,13 @@ VulkanWindow::VulkanWindow(int width, int height,const char* windowName) {
 VulkanWindow::~VulkanWindow() {
     glfwDestroyWindow(window);
 }
+
+std::vector<const char *> VulkanWindow::getRequiredExtensions() {
+
+    uint32_t glfwExtensionCount = 0;
+    const char **glfwExtensions;
+    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+    std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+
+    return extensions;
+}

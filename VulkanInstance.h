@@ -4,13 +4,16 @@
 
 #pragma once
 #include "Headers.h"
+#include "VulkanLayerAndExtension.h"
 
 class VulkanInstance {
 public:
-    VulkanInstance(const char* appName);
+    VulkanInstance(std::vector<const char*>layers,std::vector<const char *>extensions,const char* appName);
     ~VulkanInstance();
+    VkInstance getInstance();
 private:
     VkInstance instance;
+    VulkanLayerAndExtension layerAndExtension;
 };
 
 
