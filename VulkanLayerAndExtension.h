@@ -21,8 +21,8 @@ public:
     void createDebugMessenger();
     void destroyDebugMessenger();
 
-    const std::vector<const char *> &getExtensionNames() const;
-    const std::vector<const char *> &getLayerNames() const;
+    [[nodiscard]] const std::vector<const char *> &getExtensionNames() const;
+    [[nodiscard]] const std::vector<const char *> &getLayerNames() const;
     void setExtensionNames(const std::vector<const char *> &extensionNames);
     void setLayerNames(const std::vector<const char *> &layerNames);
     VkDebugUtilsMessengerCreateInfoEXT & getDebugUtilsMessengerCreateInfoExt();

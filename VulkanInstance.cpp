@@ -5,6 +5,7 @@
 #include "VulkanInstance.h"
 
 VulkanInstance::VulkanInstance(std::vector<const char*>layers,std::vector<const char *>extensions,const char* appName) {
+    TRACE_CONSTRUCTOR(VulkanInstance)
 
     layerAndExtension.setExtensionNames(extensions);
     layerAndExtension.setLayerNames(layers);
@@ -33,9 +34,15 @@ VulkanInstance::VulkanInstance(std::vector<const char*>layers,std::vector<const 
 }
 
 VulkanInstance::~VulkanInstance() {
+    TRACE_DESTRUCTOR(VulkanInstance)
+    vkDestroyInstance(instance, nullptr);
 
 }
 
-VkInstance VulkanInstance::getInstance() {
+VkInstance& VulkanInstance::getVkInstance() {
     return instance;
+}
+
+VulkanLayerAndExtension &VulkanInstance::getLayerAndExtension() {
+    return layerAndExtension;
 }

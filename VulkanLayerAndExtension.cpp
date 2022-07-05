@@ -7,18 +7,19 @@
 #include "VulkanApplication.h"
 
 VulkanLayerAndExtension::VulkanLayerAndExtension() {
+    TRACE_CONSTRUCTOR(VulkanLayerAndExtension)
+
     extensionNames = {};
     layerNames = {};
     layerPropertyList = {};
     debugMessenger = {};
 
-    vkCreateDebugUtilsMessengerExt = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(theApp.getVkInstance(),
-                                                                                                   "vkCreateDebugUtilsMessengerEXT");
-    vkDestroyDebugUtilsMessengerEXT=(PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(theApp.getVkInstance(),
-                                                                                                "vkCreateDebugUtilsMessengerEXT");
+    vkCreateDebugUtilsMessengerExt = {};
+    vkDestroyDebugUtilsMessengerEXT = {};
 
     //debug create info
-    debugUtilsMessengerCreateInfoExt={};
+    debugUtilsMessengerCreateInfoExt = {};
+
     debugUtilsMessengerCreateInfoExt.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
     debugUtilsMessengerCreateInfoExt.messageSeverity =
             VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
@@ -26,6 +27,7 @@ VulkanLayerAndExtension::VulkanLayerAndExtension() {
     debugUtilsMessengerCreateInfoExt.messageType =
             VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT | VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
             VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
+
     debugUtilsMessengerCreateInfoExt.pfnUserCallback = debugCallback;
 }
 
@@ -33,34 +35,54 @@ VKAPI_ATTR VkBool32 VKAPI_CALL
 VulkanLayerAndExtension::debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                        VkDebugUtilsMessageTypeFlagsEXT messageType,
                                        const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData, void *pUserData) {
-    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT)
+    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT) {
         std::cerr << "[VK_DEBUG_UTILS] Error : " << pCallbackData->pMessage << std::endl;
-    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT)
+    }
+    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT) {
         std::cout << "[VK_DEBUG_UTILS] Warning : " << pCallbackData->pMessage << std::endl;
-    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT)
-        std::cout << "[VK_DEBUG_UTILS] Verbose : " << pCallbackData->pMessage << std::endl;
-    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT)
+    }
+    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT) {
+        //std::cout << "[VK_DEBUG_UTILS] Verbose : " << pCallbackData->pMessage << std::endl;
+    }
+    if (messageSeverity == VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT) {
         std::cout << "[VK_DEBUG_UTILS] Info : " << pCallbackData->pMessage << std::endl;
+    }
 
     return VK_FALSE;
 }
 
 void VulkanLayerAndExtension::createDebugMessenger() {
+    if (vkCreateDebugUtilsMessengerExt == nullptr) {
+
+        vkCreateDebugUtilsMessengerExt = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(
+                theApp.getVkInstance(),
+                "vkCreateDebugUtilsMessengerEXT");
+
+        if (vkCreateDebugUtilsMessengerExt == nullptr)
+            throw std::runtime_error("failed to get proc address : vkCreateDebugUtilsMessengerExt !");
+
+    }
     //create debug messenger
-    VkResult result= vkCreateDebugUtilsMessengerExt(theApp.getVkInstance(),&debugUtilsMessengerCreateInfoExt, nullptr,&debugMessenger);
-    if(result!=VK_SUCCESS)
+    VkResult result = vkCreateDebugUtilsMessengerExt(theApp.getVkInstance(), &debugUtilsMessengerCreateInfoExt, nullptr,
+                                                     &debugMessenger);
+    if (result != VK_SUCCESS)
         throw std::runtime_error("failed to create debug messenger!");
 
 }
 
-void VulkanLayerAndExtension::destroyDebugMessenger(){
+void VulkanLayerAndExtension::destroyDebugMessenger() {
+    if (vkDestroyDebugUtilsMessengerEXT == nullptr) {
+        vkDestroyDebugUtilsMessengerEXT = (PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(
+                theApp.getVkInstance(),
+                "vkDestroyDebugUtilsMessengerEXT");
+        if (vkDestroyDebugUtilsMessengerEXT == nullptr)
+            throw std::runtime_error("failed to get proc address : vkDestroyDebugUtilsMessengerEXT !");
+    }
     vkDestroyDebugUtilsMessengerEXT(theApp.getVkInstance(), debugMessenger, nullptr);
 }
 
 VulkanLayerAndExtension::~VulkanLayerAndExtension() {
-    if(debugMessenger!= nullptr){
-        destroyDebugMessenger();
-    }
+    TRACE_DESTRUCTOR(VulkanLayerAndExtension)
 }
 
 void VulkanLayerAndExtension::setExtensionNames(const std::vector<const char *> &extensionNames) {
@@ -79,6 +101,6 @@ const std::vector<const char *> &VulkanLayerAndExtension::getLayerNames() const 
     return layerNames;
 }
 
-VkDebugUtilsMessengerCreateInfoEXT& VulkanLayerAndExtension::getDebugUtilsMessengerCreateInfoExt() {
+VkDebugUtilsMessengerCreateInfoEXT &VulkanLayerAndExtension::getDebugUtilsMessengerCreateInfoExt() {
     return debugUtilsMessengerCreateInfoExt;
 }

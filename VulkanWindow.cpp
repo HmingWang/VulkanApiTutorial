@@ -3,10 +3,12 @@
 //
 
 #include "VulkanWindow.h"
+#include "VulkanApplication.h"
 
 bool VulkanWindow::isInitialized{false};
 
 VulkanWindow::VulkanWindow(int width, int height,const char* windowName) {
+    TRACE_CONSTRUCTOR(VulkanWindow)
     if(!isInitialized){
         int res=glfwInit();
         glfwWindowHint(GLFW_CLIENT_API,GLFW_NO_API);
@@ -20,7 +22,10 @@ VulkanWindow::VulkanWindow(int width, int height,const char* windowName) {
 }
 
 VulkanWindow::~VulkanWindow() {
+    TRACE_DESTRUCTOR(VulkanWindow)
     glfwDestroyWindow(window);
+    //应该等最后一个对象销毁时销毁，因为目前只有一个窗口对象所以再次销毁。
+    glfwTerminate();
 }
 
 std::vector<const char *> VulkanWindow::getRequiredExtensions() {
@@ -29,6 +34,19 @@ std::vector<const char *> VulkanWindow::getRequiredExtensions() {
     const char **glfwExtensions;
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
     std::vector<const char *> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
+    if(theApp.isEnableValidationLayers()){
+        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+    }
 
     return extensions;
+}
+
+bool VulkanWindow::shouldClose() {
+
+    return glfwWindowShouldClose(window);
+}
+
+void VulkanWindow::pollEvents() {
+    return glfwPollEvents();
+
 }
