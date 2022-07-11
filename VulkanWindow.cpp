@@ -8,7 +8,7 @@
 bool VulkanWindow::isInitialized{false};
 
 VulkanWindow::VulkanWindow(int width, int height, const char *windowName) {
-    TRACE_CONSTRUCTOR(VulkanWindow)
+    TRACE_CONSTRUCTOR;
     if (!isInitialized) {
         int res = glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
@@ -24,7 +24,7 @@ VulkanWindow::VulkanWindow(int width, int height, const char *windowName) {
 }
 
 VulkanWindow::~VulkanWindow() {
-    TRACE_DESTRUCTOR(VulkanWindow)
+    TRACE_DESTRUCTOR;
     glfwDestroyWindow(window);
     //应该等最后一个对象销毁时销毁，因为目前只有一个窗口对象所以再次销毁。
     glfwTerminate();

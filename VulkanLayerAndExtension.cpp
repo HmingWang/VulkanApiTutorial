@@ -7,7 +7,7 @@
 #include "VulkanApplication.h"
 
 VulkanLayerAndExtension::VulkanLayerAndExtension() {
-    TRACE_CONSTRUCTOR(VulkanLayerAndExtension)
+    TRACE_CONSTRUCTOR;
 
     extensionNames = {};
     layerNames = {};
@@ -82,7 +82,7 @@ void VulkanLayerAndExtension::destroyDebugMessenger() {
 }
 
 VulkanLayerAndExtension::~VulkanLayerAndExtension() {
-    TRACE_DESTRUCTOR(VulkanLayerAndExtension)
+    TRACE_DESTRUCTOR;
 }
 
 void VulkanLayerAndExtension::setExtensionNames(const std::vector<const char *> &extensionNames) {
