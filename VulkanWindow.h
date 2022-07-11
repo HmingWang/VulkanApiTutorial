@@ -16,6 +16,13 @@ public:
     void pollEvents();
 private:
     GLFWwindow* window;
+    VkSurfaceKHR  surface;
+public:
+    void createSurface();
+    void destroySurface();
+    VkSurfaceKHR& getSurface();
+
+private:
 
     static bool isInitialized;
 

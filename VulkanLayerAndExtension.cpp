@@ -104,3 +104,27 @@ const std::vector<const char *> &VulkanLayerAndExtension::getLayerNames() const 
 VkDebugUtilsMessengerCreateInfoEXT &VulkanLayerAndExtension::getDebugUtilsMessengerCreateInfoExt() {
     return debugUtilsMessengerCreateInfoExt;
 }
+
+bool VulkanLayerAndExtension::checkValidationLayerSupport() {
+    uint32_t layerCount;
+    vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
+    layerPropertyList.resize(layerCount);
+    vkEnumerateInstanceLayerProperties(&layerCount, layerPropertyList.data());
+
+    for (const char* layerName : layerNames) {
+        bool layerFound = false;
+
+        for (const auto& layerProperties : layerPropertyList) {
+            if (strcmp(layerName, layerProperties.layerName) == 0) {
+                layerFound = true;
+                break;
+            }
+        }
+
+        if (!layerFound) {
+            return false;
+        }
+    }
+
+    return true;
+}

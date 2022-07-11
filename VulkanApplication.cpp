@@ -23,6 +23,9 @@ void VulkanApplication::initVulkan() {
     instance = new VulkanInstance(validationLayers, VulkanWindow::getRequiredExtensions(), appName.data());
     if(enableValidationLayers)
         instance->getLayerAndExtension().createDebugMessenger();
+
+
+
 }
 
 void VulkanApplication::mainLoop() {
@@ -46,6 +49,7 @@ VulkanApplication &VulkanApplication::getInstance() {
     static std::once_flag onceFlag;
     std::call_once(onceFlag, []() {
         app = std::make_unique<VulkanApplication>();
+        std::cout<<"[theApp] created !"<<std::endl;
     });
     return *app;
 }

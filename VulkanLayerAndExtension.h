@@ -27,6 +27,9 @@ public:
     void setLayerNames(const std::vector<const char *> &layerNames);
     VkDebugUtilsMessengerCreateInfoEXT & getDebugUtilsMessengerCreateInfoExt();
 
+    bool checkValidationLayerSupport();
+
+
 private:
     std::vector<const char *> extensionNames;
     std::vector<const char *> layerNames;

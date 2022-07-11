@@ -9,7 +9,9 @@ VulkanInstance::VulkanInstance(std::vector<const char*>layers,std::vector<const 
 
     layerAndExtension.setExtensionNames(extensions);
     layerAndExtension.setLayerNames(layers);
-
+    if(!layerAndExtension.checkValidationLayerSupport()){
+        throw std::runtime_error("failed to check validation layers support!");
+    }
 
     VkApplicationInfo appInfo{};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
