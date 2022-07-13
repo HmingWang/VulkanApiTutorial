@@ -49,7 +49,7 @@ VulkanApplication &VulkanApplication::getInstance() {
     static std::once_flag onceFlag;
     std::call_once(onceFlag, []() {
         app = std::make_unique<VulkanApplication>();
-        std::cout<<"[theApp] created !"<<std::endl;
+
     });
     return *app;
 }
@@ -59,7 +59,7 @@ VkInstance& VulkanApplication::getVkInstance() {
 }
 
 void VulkanApplication::drawFrame() {
-    std::cout << '.';
+    LOG_TRACE(".");
     std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 

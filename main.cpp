@@ -3,13 +3,15 @@
 //
 #include "Headers.h"
 #include "VulkanApplication.h"
+#include "Log.h"
 
 int main() {
+    LOG_DEBUG("my vulkan application start ...");
+
     try {
-        std::cout<<"my vulkan application start ..."<<std::endl;
         theApp.run();
     } catch (std::exception &e) {
-        std::cerr << e.what() << std::endl;
+        LOG_ERROR(e.what());
         return EXIT_FAILURE;
     }
 

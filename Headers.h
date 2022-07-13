@@ -14,8 +14,11 @@
 
 #include "glfw/glfw3.h"
 
-#define TRACE_CONSTRUCTOR std::cout<<"[constructor]："<<__func__<<std::endl
-#define TRACE_DESTRUCTOR  std::cout<<"[destructor ]："<<__func__<<std::endl
+////////////////////////
+#include "Log.h"
+
+#define TRACE_CONSTRUCTOR LOG_TRACE(" 构造函数: {}",__func__);
+#define TRACE_DESTRUCTOR  LOG_TRACE(" 析构函数: {}",__func__);
 
 const std::vector<const char *> validationLayers = {
         "VK_LAYER_KHRONOS_validation"
