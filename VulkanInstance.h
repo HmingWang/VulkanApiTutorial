@@ -12,7 +12,7 @@ public:
     ~VulkanInstance();
     VkInstance & getVkInstance();
 private:
-    VkInstance instance;
+    VkInstance instance{};
     VulkanLayerAndExtension layerAndExtension;
 public:
     VulkanLayerAndExtension &getLayerAndExtension();

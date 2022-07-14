@@ -37,13 +37,10 @@ public :
     template<typename Format, typename... Args>
     inline void
     outMessage(LogLevel level, std::string &&file, std::string &&func, int &&line, Format &&fmt, Args &&... args) {
-        outMessage(level, fmt::format("[{}][{}][{}][{}][{}]:{}",
-                                      this->getTimestampStr().c_str(),
-                                      Process::getPid(),
-                                      getLogLevelName(level),
-                                      func,
-                                      line,
-                                      fmt::format(std::forward<Format>(fmt), std::forward<Args>(args)...)));
+        outMessage(level, fmt::sprintf("[%s][%d][%5s][%16.16s][%3d]:%s",
+                                       getTimestampStr().c_str(),
+                                       Process::getPid(), getLogLevelName(level), func, line,
+                                       fmt::format(std::forward<Format>(fmt), std::forward<Args>(args)...)));
     };
 
 private:
@@ -61,7 +58,7 @@ private:
 private:
     LogLevel logLevel;
 
-    std::string getTimestampStr();
+    static std::string getTimestampStr();
 };
 
 

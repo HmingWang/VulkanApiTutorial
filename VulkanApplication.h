@@ -15,9 +15,12 @@ public:
     static VulkanApplication &getInstance();
 
     VkInstance& getVkInstance();
+
     bool isEnableValidationLayers();
 
 private:
+    VulkanApplication() {TRACE_CONSTRUCTOR};
+    ~VulkanApplication(){TRACE_DESTRUCTOR};
     void initWindow();
 
     void initVulkan();
@@ -32,11 +35,8 @@ private:
     const std::string appName = "hello world";
     //是否开启debug模式
     const bool enableValidationLayers = true;
-
-
-private:
-    VulkanWindow *window;
-    VulkanInstance *instance;
+    VulkanWindow *window{};
+    VulkanInstance *instance{};
 
 
     void drawFrame();

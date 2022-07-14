@@ -45,13 +45,8 @@ void VulkanApplication::cleanUp() {
 }
 
 VulkanApplication &VulkanApplication::getInstance() {
-    static std::unique_ptr<VulkanApplication> app;
-    static std::once_flag onceFlag;
-    std::call_once(onceFlag, []() {
-        app = std::make_unique<VulkanApplication>();
-
-    });
-    return *app;
+    static VulkanApplication application;
+    return application;
 }
 
 VkInstance& VulkanApplication::getVkInstance() {
@@ -59,7 +54,7 @@ VkInstance& VulkanApplication::getVkInstance() {
 }
 
 void VulkanApplication::drawFrame() {
-    LOG_TRACE(".");
+    std::cout<<'.';
     std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
