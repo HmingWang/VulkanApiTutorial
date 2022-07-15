@@ -39,7 +39,7 @@ std::vector<const char *> VulkanWindow::getRequiredExtensions() {
     if (theApp.isEnableValidationLayers()) {
         extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
     }
-
+    extensions.push_back("VK_KHR_get_physical_device_properties2");
     return extensions;
 }
 

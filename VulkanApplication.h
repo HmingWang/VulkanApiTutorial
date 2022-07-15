@@ -7,6 +7,7 @@
 #include "Headers.h"
 #include "VulkanWindow.h"
 #include "VulkanInstance.h"
+#include "VulkanDevice.h"
 
 class VulkanApplication {
 public:
@@ -19,8 +20,8 @@ public:
     bool isEnableValidationLayers();
 
 private:
-    VulkanApplication() {TRACE_CONSTRUCTOR};
-    ~VulkanApplication(){TRACE_DESTRUCTOR};
+    VulkanApplication() {TRACE_CONSTRUCTOR;};
+    ~VulkanApplication(){TRACE_DESTRUCTOR;};
     void initWindow();
 
     void initVulkan();
@@ -37,6 +38,7 @@ private:
     const bool enableValidationLayers = true;
     VulkanWindow *window{};
     VulkanInstance *instance{};
+    VulkanDevice *device{};
 
 
     void drawFrame();

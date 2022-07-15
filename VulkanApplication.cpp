@@ -21,10 +21,10 @@ void VulkanApplication::initWindow() {
 
 void VulkanApplication::initVulkan() {
     instance = new VulkanInstance(validationLayers, VulkanWindow::getRequiredExtensions(), appName.data());
-    if(enableValidationLayers)
+    if (enableValidationLayers)
         instance->getLayerAndExtension().createDebugMessenger();
 
-
+    device = new VulkanDevice(instance->getVkInstance(),validationLayers,deviceExtensions);
 
 }
 
@@ -33,11 +33,12 @@ void VulkanApplication::mainLoop() {
         drawFrame();
         window->pollEvents();
     }
-    std::cout<<std::endl;
+    std::cout << std::endl;
 }
 
 void VulkanApplication::cleanUp() {
-    if(enableValidationLayers)
+    delete device;
+    if (enableValidationLayers)
         instance->getLayerAndExtension().destroyDebugMessenger();
     delete instance;
     delete window; //调用析构函数
@@ -49,12 +50,12 @@ VulkanApplication &VulkanApplication::getInstance() {
     return application;
 }
 
-VkInstance& VulkanApplication::getVkInstance() {
+VkInstance &VulkanApplication::getVkInstance() {
     return instance->getVkInstance();
 }
 
 void VulkanApplication::drawFrame() {
-    std::cout<<'.';
+    std::cout << '.';
     std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 

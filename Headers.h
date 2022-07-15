@@ -17,8 +17,8 @@
 ////////////////////////
 #include "Log.h"
 
-#define TRACE_CONSTRUCTOR LOG_TRACE(" 构造函数: {}",__func__);
-#define TRACE_DESTRUCTOR  LOG_TRACE(" 析构函数: {}",__func__);
+#define TRACE_CONSTRUCTOR LOG_TRACE(" 构造函数: {}",__func__)
+#define TRACE_DESTRUCTOR  LOG_TRACE(" 析构函数: {}",__func__)
 
 const std::vector<const char *> validationLayers = {
         "VK_LAYER_KHRONOS_validation"
@@ -26,4 +26,5 @@ const std::vector<const char *> validationLayers = {
 
 const std::vector<const char *> deviceExtensions = {
         VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+        "VK_KHR_portability_subset"
 };
