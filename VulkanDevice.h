@@ -13,9 +13,6 @@ public :
     VulkanDevice(VkInstance,const std::vector<const char *>&, const std::vector<const char *>&);
     ~VulkanDevice();
 
-
-
-
 private:
     uint32 deviceCount{};
     VkPhysicalDevice physicalDevice{};
