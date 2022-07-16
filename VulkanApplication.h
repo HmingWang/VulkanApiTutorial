@@ -8,6 +8,7 @@
 #include "VulkanWindow.h"
 #include "VulkanInstance.h"
 #include "VulkanDevice.h"
+#include "VulkanSwapChain.h"
 
 class VulkanApplication {
 public:
@@ -39,6 +40,7 @@ private:
     VulkanWindow *window{};
     VulkanInstance *instance{};
     VulkanDevice *device{};
+    VulkanSwapChain* swapChain{};
 
 
     void drawFrame();

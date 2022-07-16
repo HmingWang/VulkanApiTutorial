@@ -4,13 +4,7 @@
 
 #pragma once
 
-#include <string>
-#include <iostream>
-#include "Define.h"
-#include "fmt/format.h"
-#include "fmt/printf.h"
-#include "Process.h"
-
+#include "Headers.h"
 
 #define NAME(x) #x
 
@@ -63,10 +57,9 @@ private:
 
 
 #define log Log::getInstance()
-
-#define LOG_TRACE(...)  log.outMessage(LogLevel::TRACE,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
-#define LOG_DEBUG(...)  log.outMessage(LogLevel::DEBUG,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
-#define LOG_INFO(...)  log.outMessage(LogLevel::INFO,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
-#define LOG_WARN(...)  log.outMessage(LogLevel::WARN,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
-#define LOG_ERROR(...)  log.outMessage(LogLevel::ERROR,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
-#define LOG_FATAL(...)  log.outMessage(LogLevel::FATAL,__FILE_NAME__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_TRACE(...)  log.outMessage(LogLevel::TRACE,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_DEBUG(...)  log.outMessage(LogLevel::DEBUG,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_INFO(...)  log.outMessage(LogLevel::INFO,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_WARN(...)  log.outMessage(LogLevel::WARN,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_ERROR(...)  log.outMessage(LogLevel::ERROR,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)
+#define LOG_FATAL(...)  log.outMessage(LogLevel::FATAL,__FILE__,__FUNCTION__, __LINE__,__VA_ARGS__)

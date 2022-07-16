@@ -23,7 +23,6 @@ public:
     VkSurfaceKHR& getSurface();
 
 private:
-
     static bool isInitialized;
 
 };

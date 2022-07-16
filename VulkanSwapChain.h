@@ -5,11 +5,13 @@
 #pragma once
 
 #include "Headers.h"
+#include "VulkanWindow.h"
+#include "VulkanDevice.h"
 
 class VulkanSwapChain {
 public:
-    VulkanSwapChain(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface);
-
+    VulkanSwapChain(VulkanWindow* window,VulkanDevice* device);
+    ~VulkanSwapChain();
 private:
     VkSurfaceCapabilitiesKHR surfaceCapabilities{};
     std::vector<VkSurfaceFormatKHR> surfaceFormats;
@@ -20,7 +22,9 @@ private:
     uint32 imageCount;
     VkPhysicalDevice physicalDevice;
     VkSurfaceKHR surface;
-
+    VulkanWindow* window;
+    VulkanDevice* device;
+    VkSwapchainKHR swapChain{};
     static VkSurfaceFormatKHR chooseSwapSurfaceFormat(std::vector<VkSurfaceFormatKHR> &availableFormats);
 
     static VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> &availablePresentModes);

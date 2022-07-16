@@ -26,8 +26,8 @@ std::string Log::getTimestampStr()
 {
     time_t tt = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
-    std::tm aTm{};
-    localtime_r(&tt, &aTm);
+    std::tm *aTm=localtime(&tt);
+//    localtime(&tt, &aTm);
 
     //       YYYY   year
     //       MM     month (2 digits 01-12)
@@ -37,7 +37,7 @@ std::string Log::getTimestampStr()
     //       SS     seconds (2 digits 00-59)
     try
     {
-        return fmt::sprintf("%04d-%02d-%02d %02d:%02d:%02d",aTm.tm_year + 1900, aTm.tm_mon + 1, aTm.tm_mday, aTm.tm_hour, aTm.tm_min, aTm.tm_sec);
+        return fmt::sprintf("%04d-%02d-%02d %02d:%02d:%02d",aTm->tm_year + 1900, aTm->tm_mon + 1, aTm->tm_mday, aTm->tm_hour, aTm->tm_min, aTm->tm_sec);
     }
     catch (std::exception const& ex)
     {

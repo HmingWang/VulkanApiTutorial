@@ -12,6 +12,8 @@ class VulkanDevice {
 public :
     VulkanDevice(VkInstance,const std::vector<const char *>&, const std::vector<const char *>&);
     ~VulkanDevice();
+    VkPhysicalDevice& getPhysicalDevice();
+    VkDevice& getDevice();
 
 private:
     uint32 deviceCount{};
@@ -23,7 +25,14 @@ private:
 
     VkQueue queue{};                            // Vulkan Queues object
     std::vector<VkQueueFamilyProperties> queueFamilyProps;                // Store all queue families exposed by the physical device. attributes
-    uint32 graphicsQueueIndex{};                // Stores graphics queue index
+    uint32 graphicsQueueIndex{};
+public:
+    VkQueue& getQueue();
+
+    uint32& getGraphicsQueueIndex();
+
+private:
+    // Stores graphics queue index
     uint32 graphicsQueueWithPresentIndex{};  // Number of queue family exposed by device
     uint32 queueFamilyCount{};                // Device specificc layer and extensions
 

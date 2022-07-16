@@ -112,3 +112,19 @@ void VulkanDevice::getDeviceQueue() {
     vkGetDeviceQueue(device, graphicsQueueIndex,0,&queue);
 }
 
+VkPhysicalDevice &VulkanDevice::getPhysicalDevice() {
+    return physicalDevice;
+}
+
+VkDevice &VulkanDevice::getDevice() {
+    return device;
+}
+
+VkQueue& VulkanDevice::getQueue() {
+    return queue;
+}
+
+uint32& VulkanDevice::getGraphicsQueueIndex() {
+    return graphicsQueueIndex;
+}
+

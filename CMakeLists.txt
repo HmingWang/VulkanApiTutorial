@@ -32,10 +32,12 @@ if(Vulkan_FOUND)
     target_link_libraries(${project_name} Vulkan::Vulkan)
 endif()
 
+if(WIN32)
+set(glfw3_DIR "C:\\Program Files (x86)\\GLFW\\lib\\cmake\\glfw3")
+endif()
 find_package(glfw3 REQUIRED)
 if(glfw3_FOUND)
     message("${GLFW_INCLUDE_DIR}")
     target_include_directories(${project_name} PRIVATE ${GLFW_INCLUDE_DIR})
     target_link_libraries(${project_name} glfw)
 endif()
-

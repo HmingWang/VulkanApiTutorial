@@ -19,8 +19,8 @@ typedef uint8_t     uint8;
 //Operating System
 //--------------------------------------------------------------
 #define OS_WINDOWS      1           //Windows system
-#define OS_WIN_32       11          //32bit Windows
-#define OS_WIN_64       12          //64bit Windows
+//#define OS_WIN_32       11          //32bit Windows
+//#define OS_WIN_64       12          //64bit Windows
 #define OS_LINUX        2           //linux system
 #define OS_MACOS        3           //MacOS system
 #define OS_IOS          31          //iPhone iOS system
@@ -32,9 +32,9 @@ typedef uint8_t     uint8;
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #   define SYSTEM_OS OS_WINDOWS
 #ifdef _WIN64
-#   define SYSTEM_OS OS_WIN_64
+#   define OS_WIN_64
 #else
-#   define SYSTEM_OS OS_WIN_32
+#   define OS_WIN_32
 #endif
 
 #elif __APPLE__

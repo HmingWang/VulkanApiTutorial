@@ -23,9 +23,9 @@ void VulkanApplication::initVulkan() {
     instance = new VulkanInstance(validationLayers, VulkanWindow::getRequiredExtensions(), appName.data());
     if (enableValidationLayers)
         instance->getLayerAndExtension().createDebugMessenger();
-
-    device = new VulkanDevice(instance->getVkInstance(),validationLayers,deviceExtensions);
-
+    window->createSurface();
+    device = new VulkanDevice(instance->getVkInstance(), validationLayers, deviceExtensions);
+    swapChain = new VulkanSwapChain(this->window, this->device);
 }
 
 void VulkanApplication::mainLoop() {
@@ -37,7 +37,9 @@ void VulkanApplication::mainLoop() {
 }
 
 void VulkanApplication::cleanUp() {
+    delete swapChain;
     delete device;
+    window->destroySurface();
     if (enableValidationLayers)
         instance->getLayerAndExtension().destroyDebugMessenger();
     delete instance;
