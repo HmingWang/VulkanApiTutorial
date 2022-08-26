@@ -4,13 +4,18 @@
 
 #include "VulkanSwapChain.h"
 
-VulkanSwapChain::VulkanSwapChain(VulkanWindow* window,VulkanDevice* device) {
+VulkanSwapChain::VulkanSwapChain(VulkanWindow *window, VulkanDevice *device) {
     TRACE_CONSTRUCTOR;
-    this->surface=window->getSurface();
-    this->physicalDevice=device->getPhysicalDevice();
-    this->window=window;
-    this->device=device;
+    this->surface = window->getSurface();
+    this->physicalDevice = device->getPhysicalDevice();
+    this->window = window;
+    this->device = device;
 
+    VkBool32 isSupport = VK_FALSE;
+    vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, 0, surface,&isSupport);
+    if(isSupport!=VK_TRUE){
+        LOG_ERROR("surface not supported!");
+    }
     //get surface capabilities
     vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice, surface, &surfaceCapabilities);
 
@@ -108,5 +113,5 @@ void VulkanSwapChain::createSwapChain() {
 
 VulkanSwapChain::~VulkanSwapChain() {
     TRACE_DESTRUCTOR;
-    vkDestroySwapchainKHR(this->device->getDevice(),swapChain, nullptr);
+    vkDestroySwapchainKHR(this->device->getDevice(), swapChain, nullptr);
 }

@@ -16,7 +16,6 @@ void VulkanApplication::run() {
 
 void VulkanApplication::initWindow() {
     window = new VulkanWindow(width, height, appName.data());
-
 }
 
 void VulkanApplication::initVulkan() {
